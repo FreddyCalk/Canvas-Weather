@@ -1,0 +1,13 @@
+#current-temp #weather-canvas{
+	height: 300px;
+
+
+}
+#weather-icon{
+	width:100px;
+	margin-left:150px;
+
+}
+#weather-icon img{
+	width:100%;
+}
