@@ -5,15 +5,24 @@ $(document).ready(function(){
 	var apiKey = '1a5d837d4c874f4635ed8ae9ecae0ca9';
 	
 	function getWeather(location){
-		var weatherURL = 'http://api.openweathermap.org/data/2.5/weather?q='+location+',ga&units=imperial&APPID='+apiKey;
+		var searchType = typeof(location);
+
+		if(searchType === 'string'){
+			root = 'q=';
+		}else if(searchType === 'number'){
+			root = 'zip=';
+		}
+
+		var weatherURL = 'http://api.openweathermap.org/data/2.5/weather?'+root+location+',us&units=imperial&APPID='+apiKey;
 		
 		$.getJSON(weatherURL, function(weatherData){
-
 			var currTemp = weatherData.main.temp;
 			var finalTemp = currTemp + ' \xB0F'
 			var image = new Image;
 			var icon = weatherIconURL + weatherData.weather[0].icon + '.png';
 			image.src = icon;
+			var condition = weatherData.weather[0].description;
+			var area = weatherData.name;
 			var canvas = $('#weather-canvas')[0];
 			var context = canvas.getContext('2d');
 			
@@ -57,6 +66,9 @@ $(document).ready(function(){
 				context.fillStyle = "black";
 				context.textBaseline = 'top';
 				context.fillText(finalTemp,110-outterRadius, 92-outterRadius/2)
+				context.font = '12px Myriad Pro';
+				context.fillText(condition,140-outterRadius, 135-outterRadius/2)
+				context.fillText(area,145-outterRadius, 150-outterRadius/2)
 				context.drawImage(image,75,20)
 				currPercent++;
 				if(currPercent < Math.abs(currTemp)){
@@ -69,12 +81,14 @@ $(document).ready(function(){
 			context.closePath();
 
 
-
 			})
 	};
 	$('form').submit(function(){
 		var location = $('#search-field').val();
 		event.preventDefault();
+		var canvas = $('#weather-canvas')[0];
+		var context = canvas.getContext('2d');
+		context.clearRect(0,0, canvas.width, canvas.height)
 		getWeather(location);
 	});
 	getWeather('atlanta');

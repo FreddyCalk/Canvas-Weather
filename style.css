@@ -1,13 +1,23 @@
 #current-temp #weather-canvas{
 	height: 300px;
+}
+
+#search-wrapper{
+	width: 800px;
+}
+#search-wrapper #search-field{
+	width:450px;
+	padding:1%;
+	display: inline;
+}
+#search-wrapper #button{
+	padding:10%;
+}
 
 
-}
-#weather-icon{
-	width:100px;
-	margin-left:150px;
 
-}
-#weather-icon img{
-	width:100%;
-}
+
+
+
+
+
