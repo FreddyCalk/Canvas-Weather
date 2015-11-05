@@ -1,8 +1,7 @@
-$(document).ready(function(){
-	
+$(document).ready(function(){	
 	var weatherIconURL = 'http://openweathermap.org/img/w/';
 	var apiKey = '1a5d837d4c874f4635ed8ae9ecae0ca9';
-
+	
 	function getDayOfWeek(){
 		var today = new Date();
 		var dayOfWeek = today.getDay();
@@ -37,7 +36,7 @@ $(document).ready(function(){
 			return dayWords;	
 		}
 	function getForecastArray(){
-		var today = getDayOfWeek();
+		var today = getDayOfWeek() + 1;
 		var weekArray = [];
 
 		for(i=0;i<7;i++){
@@ -102,13 +101,10 @@ $(document).ready(function(){
 			return direction;
 		}
 
-	
-
 		$.getJSON(weatherURL, function(weatherData){
 			var currTemp = Math.round(Number(weatherData.main.temp));
 			var finalTemp = currTemp + ' \xB0F'
 			var icon = weatherIconURL + weatherData.weather[0].icon + '.png';
-			console.log(weatherData)
 			var windCoord = weatherData.wind.deg;
 			var cards = cardinalDirection(windCoord);
 			var windSpeed = Math.round(Number(weatherData.wind.speed));
@@ -144,10 +140,12 @@ $(document).ready(function(){
 				context.arc(100,75,innerRadius,0,circ,true);
 				context.closePath();
 				context.fill()
-				if(currTemp<32){
-					shadeColor = '#00f';
+				if(currTemp<10){
+					shadeColor= '#00f';
+				}else if(currTemp<32){
+					shadeColor = '#36f';
 				}else if(currTemp<60){
-					shadeColor = '#39f'
+					shadeColor = '#3af'
 				}else if(currTemp<75){
 					shadeColor = '#1cff1c'
 				}else if(currTemp<90){
@@ -158,7 +156,11 @@ $(document).ready(function(){
 				context.strokeStyle = shadeColor;
 				context.lineWidth= '10';
 				context.beginPath();
-				context.arc(100,75,outterRadius,-(quart),(current*(circ)-quart),false);
+				if(currTemp<0){
+					context.arc(100,75,outterRadius,-(quart),2*Math.PI-quart-(current*(circ)),true)
+				}else{
+					context.arc(100,75,outterRadius,-(quart),(current*(circ)-quart),false);
+				}
 				context.stroke()
 				context.font = '34px Myriad Pro';
 				context.fillStyle = "black";
@@ -173,26 +175,20 @@ $(document).ready(function(){
 			};
 			animate()
 			context.closePath();
-
-
 			})
 		$.getJSON(forecastURL, function(weatherData){
 			var forecast = weatherData.list
-			console.log(forecast)
 			var days = getForecastArray();
-			console.log(days);
-			days[0] = 'Today';
-			days[1] = 'Tomorrow'
+			days[0] = 'Tomorrow';
 			for(i=0;i<days.length;i++){
 				var html2 = '<div class="days" id="day'+i+'"><span class="bold">'+days[i]+'</span>';
-						html2 += '<div class="highs">High: '+Math.round(forecast[i].temp.max)+'</div>'
-						html2 += '<div class="lows">Low: '+Math.round(forecast[i].temp.min)+'</div>'
+						html2 += '<div class="highs">High: '+Math.round(forecast[i].temp.max)+' \xB0F</div>'
+						html2 += '<div class="lows">Low: '+Math.round(forecast[i].temp.min)+' \xB0F</div>'
+						html2 += '<div class="rain">'
 					html2 += '</div>'
 
 				$('#forecast').append(html2);
 			}
-		
-
 		})
 	};
 

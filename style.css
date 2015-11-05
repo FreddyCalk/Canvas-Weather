@@ -1,9 +1,17 @@
 body{
 	overflow:hidden;
 }
+h1{
+	margin:0;
+	margin-left: 150px;
+	padding:0;
+	position:absolute;
+	top:15px;
+	text-align: center;
+}
 #widget-wrapper{
 	width:620px;
-	height:420px;
+	height:400px;
 	margin:10px 0px;
 	padding:50px;
 	border-radius: 10px;
@@ -16,13 +24,17 @@ body{
 #city-results{
 	width: 300px;
 	display:inline;
+
 }
 #city-info{
 	position:absolute;
-	width:340px;
+	width:265px;
+	padding-left:30px;
 	display:inline;
+	border-radius:10px;
 	top:100px;
-	left:420px;
+	left:417px;
+	background-color: #3399ff;
 }
 #city-info img{
 	width:75px;
@@ -35,17 +47,19 @@ body{
 
 }
 #search-wrapper{
-	width: 530px;
+	margin-left: 160px;
+	width: 330px;
+	float:left;
 }
 
 #search-wrapper #search-field{
-	width:450px;
+	width:269px;
 	padding:1%;
 	display: inline;
 	border-radius: 5px;
 }
 #wind-arrow{
-	transition: transform 2s;
+	transition: transform 1s;
 	position:absolute;
 	top:200px;
 	left:50px;
@@ -96,13 +110,14 @@ margin-left:50px;
 .days{
 	display: inline;
 	position:absolute;
+	top: 20px;
 	float:left;
 	text-align: center;
-	background-color:blue;
-	color:white;
-	width:70px;
+	background-color: #3399ff;
+	color:black;
+	font-size: 14px;
+	width:75px;
 	padding:10px;
-	margin:0px 5px;
 	border-radius: 10px;
 }
 .highs{
