@@ -2,22 +2,26 @@
 <html>
 <head>
 
-	<title></title>
+	<title>Weather</title>
 	<link rel="stylesheet" href="style.css">
 	<script type="text/javascript" src="jquery.min.js"></script>
 	<script type="text/javascript" src="script.js"></script>
 
 </head>
 <body>
-	<div id="search-wrapper">
-		<form id="weather-search" method = "get-weather">
-			<input id="search-field" type='text' name="location" placeholder="Search a city or Zip Code...">
-			<input id='button' type="submit" value="submit">
-		</form>
+	<div id="widget-wrapper">
+		<div id="search-wrapper">
+			<form id="weather-search" method = "get-weather">
+				<input id="search-field" type='text' name="location" placeholder="Search a city or Zip Code...">
+				<input class='button' id='button' type="submit" value="search">
+			</form>
+		</div>
+			<canvas id="weather-canvas"></canvas>
+		<div id="city-results">
+			
+		</div>
+		<div id="forecast">
+		</div>
 	</div>
-	<div id="current-temp">
-		<canvas id="weather-canvas">Test Text</canvas>
-	</div>
-	
 </body>
 </html>
