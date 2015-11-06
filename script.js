@@ -61,8 +61,6 @@ $(document).ready(function(){
 		var weatherURL = 'http://api.openweathermap.org/data/2.5/weather?'+root+location+',us&units=imperial&APPID='+apiKey;
 		var forecastURL = 'http://api.openweathermap.org/data/2.5/forecast/daily?'+root+location+',us&units=imperial&APPID='+apiKey;
 		
-		
-
 		function cardinalDirection(deg){
 			var direction;
 			if((deg<11.25)||(deg>348.75)){
@@ -103,10 +101,18 @@ $(document).ready(function(){
 
 		$.getJSON(weatherURL, function(weatherData){
 			var currTemp = Math.round(Number(weatherData.main.temp));
+			console.log(weatherData)
 			var finalTemp = currTemp + ' \xB0F'
 			var icon = weatherIconURL + weatherData.weather[0].icon + '.png';
 			var windCoord = weatherData.wind.deg;
 			var cards = cardinalDirection(windCoord);
+			
+			if(windCoord>=180){
+				windCoord = windCoord - 180;
+			}else{
+				windCoord = windCoord + 180;
+			}
+
 			var windSpeed = Math.round(Number(weatherData.wind.speed));
 			var condition = weatherData.weather[0].description;
 			var area = weatherData.name;
@@ -118,14 +124,21 @@ $(document).ready(function(){
 					html += '<img src='+icon+'>';
 					html += '<h3 id="city-name">'+area+'</h3>';
 					html += '<p id="condition">'+condition+'</p>';
-					html += '<p id="wind-info">Winds blowing '+cards+' at '+windSpeed+' mph</p>'
+					html += '<p id="wind-info">Winds: '+cards+' at '+windSpeed+' mph</p>'
 					html += '<div id="compass"><p id="N">N</p><p id="E">E</p><p id="S">S</p><p id="W">W</p></div>'
 					html += '<img id="wind-arrow" src="windarrow.png">'
 				html += '</div>';
 			$('#city-results').append(html);
 			
 			$('#wind-arrow').addClass('rotate');
-			setTimeout(function(){$('.rotate').css('transform','rotate('+windCoord+'deg)')},0)
+			
+			if(windCoord>180){
+				setTimeout(function(){$('.rotate').css('transform','rotate('+(180-windCoord)+'deg)')},0)
+			}else{
+				setTimeout(function(){$('.rotate').css('transform','rotate('+windCoord+'deg)')},0)
+			}
+			
+			
 			var lineWidth = 5;
 			var outterRadius = 70;
 			var innerRadius = outterRadius - lineWidth;
@@ -135,7 +148,7 @@ $(document).ready(function(){
 			var quart = Math.PI / 2;
 
 			function animate(current){
-				context.fillStyle = '#ccc'
+				context.fillStyle = '#3399ff'
 				context.beginPath();
 				context.arc(100,75,innerRadius,0,circ,true);
 				context.closePath();
@@ -156,12 +169,15 @@ $(document).ready(function(){
 				context.strokeStyle = shadeColor;
 				context.lineWidth= '10';
 				context.beginPath();
+				// If statement is to decide which direction the animation should proceed to
+				// depict the temperature
 				if(currTemp<0){
 					context.arc(100,75,outterRadius,-(quart),2*Math.PI-quart-(current*(circ)),true)
 				}else{
 					context.arc(100,75,outterRadius,-(quart),(current*(circ)-quart),false);
 				}
 				context.stroke()
+				// 
 				context.font = '34px Myriad Pro';
 				context.fillStyle = "black";
 				context.textBaseline = 'top';
@@ -176,8 +192,10 @@ $(document).ready(function(){
 			animate()
 			context.closePath();
 			})
+
 		$.getJSON(forecastURL, function(weatherData){
 			var forecast = weatherData.list
+			console.log(weatherData)
 			var days = getForecastArray();
 			days[0] = 'Tomorrow';
 			for(i=0;i<days.length;i++){
