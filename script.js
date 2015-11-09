@@ -101,7 +101,6 @@ $(document).ready(function(){
 
 		$.getJSON(weatherURL, function(weatherData){
 			var currTemp = Math.round(Number(weatherData.main.temp));
-			console.log(weatherData)
 			var finalTemp = currTemp + ' \xB0F'
 			var icon = weatherIconURL + weatherData.weather[0].icon + '.png';
 			var windCoord = weatherData.wind.deg;
@@ -131,7 +130,7 @@ $(document).ready(function(){
 			$('#city-results').append(html);
 			
 			$('#wind-arrow').addClass('rotate');
-			
+			$('#wind-arrow').css('transition', 'transform '+ 10/windSpeed +'s cubic-bezier(0.09,0.25,0.49,1.58)');
 			if(windCoord>180){
 				setTimeout(function(){$('.rotate').css('transform','rotate('+(180-windCoord)+'deg)')},0)
 			}else{
@@ -194,8 +193,7 @@ $(document).ready(function(){
 			})
 
 		$.getJSON(forecastURL, function(weatherData){
-			var forecast = weatherData.list
-			console.log(weatherData)
+			var forecast = weatherData.list;
 			var days = getForecastArray();
 			days[0] = 'Tomorrow';
 			for(i=0;i<days.length;i++){
