@@ -104,12 +104,11 @@ $(document).ready(function(){
 			var finalTemp = currTemp + ' \xB0F'
 			var icon = weatherIconURL + weatherData.weather[0].icon + '.png';
 			var windCoord = weatherData.wind.deg;
+			console.log(windCoord);
 			var cards = cardinalDirection(windCoord);
 			
 			if(windCoord>=180){
-				windCoord = windCoord - 180;
-			}else{
-				windCoord = windCoord + 180;
+				windCoordMod = windCoord - 180;
 			}
 
 			var windSpeed = Math.round(Number(weatherData.wind.speed));
@@ -131,10 +130,11 @@ $(document).ready(function(){
 			
 			$('#wind-arrow').addClass('rotate');
 			$('#wind-arrow').css('transition', 'transform '+ 10/windSpeed +'s cubic-bezier(0.09,0.25,0.49,1.58)');
-			if(windCoord>180){
-				setTimeout(function(){$('.rotate').css('transform','rotate('+(180-windCoord)+'deg)')},0)
+			if(windCoord<=180){
+				var rotationAngle = -(180-windCoord);
+				setTimeout(function(){$('.rotate').css('transform','rotate('+rotationAngle+'deg)')},0)
 			}else{
-				setTimeout(function(){$('.rotate').css('transform','rotate('+windCoord+'deg)')},0)
+				setTimeout(function(){$('.rotate').css('transform','rotate('+windCoordMod+'deg)')},0)
 			}
 			
 			
