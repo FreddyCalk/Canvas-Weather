@@ -147,7 +147,7 @@ $(document).ready(function(){
 			var quart = Math.PI / 2;
 
 			function animate(current){
-				context.fillStyle = '#3399ff'
+				context.fillStyle = '#ccc'
 				context.beginPath();
 				context.arc(100,75,innerRadius,0,circ,true);
 				context.closePath();
