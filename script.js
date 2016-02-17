@@ -1,7 +1,7 @@
 $(document).ready(function(){	
 	var weatherIconURL = 'http://openweathermap.org/img/w/';
 	var apiKey = '1a5d837d4c874f4635ed8ae9ecae0ca9';
-	
+	$.backstretch('weather image.jpg');
 	function getDayOfWeek(){
 		var today = new Date();
 		var dayOfWeek = today.getDay();

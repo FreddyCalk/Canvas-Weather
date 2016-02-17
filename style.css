@@ -1,9 +1,3 @@
-body{
-	overflow:hidden;
-	background-image: url('weather image.jpg');
-	background-size: 100vw;
-	background-position: top;
-}
 h1{
 	margin:0;
 	margin-left: 150px;
